@@ -98,7 +98,7 @@ def main():
     d.text((M, 306 * SS), "Black Salamander", font=f_title, fill=TEXT)
     d.text((M, 392 * SS), "Studios", font=f_title, fill=TEXT)
 
-    d.text((M, 500 * SS), "We build worlds that keep going after you log off.",
+    d.text((M, 500 * SS), "Real videogames, made by real humans.",
            font=f_tag, fill=DIM)
 
     d.line([(M, 566 * SS), ((W - 96) * SS, 566 * SS)], fill=(30, 41, 59), width=2 * SS)

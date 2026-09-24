@@ -215,9 +215,11 @@ a { color: inherit; }
   opacity: 0.7;
 }
 
+/* The measure is set so the headline breaks on its comma rather than stranding
+   the last word on a line of its own. */
 .hero h1 {
   font-size: clamp(2.1rem, 6.2vw, 3.7rem);
-  max-width: 16ch;
+  max-width: 18ch;
   margin-bottom: 24px;
 }
 
