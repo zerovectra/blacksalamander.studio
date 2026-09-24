@@ -52,38 +52,16 @@ def tracked_text(draw, xy, text, fnt, fill, tracking):
     return x
 
 
-def draw_mark(draw, ox, oy, k):
-    """The site's salamander mark, defined in a 100x100 box."""
-    def P(p):
-        return (ox + p[0] * k, oy + p[1] * k)
+def paste_mark(img, ox, oy, size):
+    """The studio mark, from the asset make_mark.py produces.
 
-    # ring
-    r = 44 * k
-    draw.ellipse(
-        [ox + 50*k - r, oy + 50*k - r, ox + 50*k + r, oy + 50*k + r],
-        outline=RING, width=max(1, int(2.2 * k)),
-    )
-
-    # spine: three cubic segments, drawn as one polyline
-    spine = (
-        cubic((20, 78), (34, 78), (28, 62), (39, 56))
-        + cubic((39, 56), (50, 50), (56, 57), (62, 48))
-        + cubic((62, 48), (68, 39), (62, 31), (69, 27))
-    )
-    draw.line([P(p) for p in spine], fill=ACCENT,
-              width=int(6.5 * k), joint="curve")
-
-    for a, b in [((39, 56), (29, 66)), ((39, 56), (48, 66)),
-                 ((63, 46), (55, 38)), ((63, 46), (71, 53))]:
-        draw.line([P(a), P(b)], fill=ACCENT, width=int(5 * k))
-        for pt in (a, b):                      # round the caps
-            cr = 2.5 * k
-            cx, cy = P(pt)
-            draw.ellipse([cx - cr, cy - cr, cx + cr, cy + cr], fill=ACCENT)
-
-    hr = 6 * k
-    hx, hy = P((73, 24))
-    draw.ellipse([hx - hr, hy - hr, hx + hr, hy + hr], fill=ACCENT)
+    The source is only 100px, so anything above that is an upscale. It is a brush
+    texture, which tolerates it better than a geometric logo would, but this is
+    the one part of the card that wants a higher resolution original.
+    """
+    m = Image.open("public/assets/mark.png").convert("RGBA")
+    m = m.resize((size, size), Image.LANCZOS)
+    img.paste(m, (ox, oy), m)
 
 
 def main():
@@ -105,7 +83,8 @@ def main():
 
     M = 96 * SS                               # left margin
 
-    draw_mark(d, M, 74 * SS, 1.55 * SS)
+    paste_mark(img, M, 68 * SS, 168 * SS)
+    d = ImageDraw.Draw(img)                   # re-bind after the paste
 
     f_eyebrow = font("consolab.ttf", 19)
     f_title = font("segoeuib.ttf", 78)
@@ -117,7 +96,7 @@ def main():
     tracked_text(d, (M + 50 * SS, y), "INDEPENDENT GAME STUDIO", f_eyebrow, ACCENT, 4.5)
 
     d.text((M, 306 * SS), "Black Salamander", font=f_title, fill=TEXT)
-    d.text((M, 392 * SS), "Studio", font=f_title, fill=TEXT)
+    d.text((M, 392 * SS), "Studios", font=f_title, fill=TEXT)
 
     d.text((M, 500 * SS), "We build worlds that keep going after you log off.",
            font=f_tag, fill=DIM)

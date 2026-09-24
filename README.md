@@ -1,6 +1,6 @@
 # blacksalamander.studio
 
-Static marketing site for Black Salamander Studio. No build step, no dependencies,
+Static marketing site for Black Salamander Studios. No build step, no dependencies,
 no JavaScript. Everything served is exactly what is in `public/`.
 
 ```
@@ -76,8 +76,21 @@ site directly rather than following the `_redirects` rule.
   It writes straight to `public/assets/og.png` at 1200x630. Note that Discord,
   Slack and the rest cache OG images aggressively, so a change can take a while
   to show up in previews.
-- **The salamander mark** in the header and favicon is a placeholder drawn in
-  code. Replace with real art when there is some.
+- **The mark needs a higher resolution source.** `tools/source/logo-discord-100.png`
+  is the studio logo pulled from the Discord server icon, and that upload was only
+  100x100, which is all Discord will serve. It is fine in the header (34-38px) and
+  the favicons, since those only ever scale it down, but the OG card enlarges it to
+  168px and the apple-touch icon to 140px, and both are visibly soft. Drop the
+  original artwork in beside it, point `SRC` at it, and re-run:
+
+  ```powershell
+  py tools/make_mark.py
+  py tools/make_og.py
+  ```
+
+  `make_mark.py` keys the parchment background out along the parchment-to-ink axis
+  and retints the ink to bone (`#ccc6b0`). If the new source is already transparent,
+  that keying step needs replacing with a straight alpha read.
 - **Project copy** for The Bleak Isles was drafted here and then edited by hand.
   Silt Strider and Tales from Nirn are the user's own wording.
 

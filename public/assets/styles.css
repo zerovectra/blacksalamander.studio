@@ -1,4 +1,4 @@
-/* Black Salamander Studio
+/* Black Salamander Studios
    Dark / cold / arcane. One stylesheet, no build step, no external requests. */
 
 :root {
@@ -114,27 +114,16 @@ a { color: inherit; }
   color: var(--text);
 }
 
+/* The studio mark, keyed out of the ink-on-parchment original and tinted bone.
+   The source is 100px, so it is only ever scaled down. See tools/make_mark.py. */
 .mark {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   flex: none;
-  overflow: visible;
+  opacity: 0.92;
+  transition: opacity 0.18s ease;
 }
-.mark-ring {
-  fill: none;
-  stroke: var(--line-strong);
-  stroke-width: 2;
-}
-.mark-body path {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 6.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.mark-body path + path { stroke-width: 5; }
-.mark-head { fill: var(--accent); }
-.brand:hover .mark-ring { stroke: var(--accent-deep); }
+.brand:hover .mark { opacity: 1; }
 
 .brand-text {
   display: flex;
