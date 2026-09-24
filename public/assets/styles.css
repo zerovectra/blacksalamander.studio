@@ -286,114 +286,113 @@ a { color: inherit; }
   font-size: 0.98rem;
 }
 
-/* ---------- projects ---------- */
-
-.projects {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--line);
-}
+/* ---------- projects ----------
+   Each project gets a different shape on purpose. The lead project carries a
+   grid of development shots, the live one a wide lead image, and the
+   unannounced one nothing at all, which reads as restraint rather than a gap. */
 
 .project {
-  display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: 8px 24px;
-  padding: 34px 0;
+  padding: clamp(36px, 6vw, 60px) 0;
   border-bottom: 1px solid var(--line);
-  position: relative;
 }
-.project::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 1px;
-  background: linear-gradient(to right, var(--accent), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.project:hover::after { opacity: 0.8; }
-
-.project-index {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  letter-spacing: 0.1em;
-  color: var(--text-faint);
-  margin: 6px 0 0;
-}
-
-.project-body { min-width: 0; }
+.project:first-of-type { padding-top: 0; }
+.project:last-of-type { border-bottom: 0; }
 
 .project-title {
-  font-size: clamp(1.25rem, 3vw, 1.6rem);
-  margin-bottom: 12px;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  margin-bottom: 10px;
 }
 
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+/* the old status pills and tag chips read as a pricing page, so this is one
+   quiet line of plain text instead */
+.project-note {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--text-dim);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  border-radius: 999px;
-  padding: 5px 12px;
+  color: var(--text-faint);
   margin-bottom: 18px;
 }
-.status .dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-  flex: none;
-}
-.status-build .dot { background: var(--accent); box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.15); }
-.status-live  .dot { background: var(--live);   box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.15); }
-.status-early .dot { background: var(--early); }
 
 .project-copy {
   color: var(--text-dim);
   max-width: 68ch;
-  margin-bottom: 18px;
+  margin-bottom: 0;
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.project-links { margin-top: 20px; }
+
+.project-quiet .project-copy { color: var(--text-faint); max-width: 54ch; }
+
+/* ---------- screenshots ---------- */
+
+.shots { margin: 26px 0 0; }
+
+.shot-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.tags li {
-  font-size: 0.78rem;
-  letter-spacing: 0.02em;
-  color: var(--text-faint);
-  background: var(--surface-2);
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
   border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--surface);
 }
 
-.project-links { margin-top: 18px; }
+.shot-caption {
+  margin: 8px 0 0;
+  font-size: 0.83rem;
+  line-height: 1.45;
+  color: var(--text-faint);
+}
 
-.link {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(125, 211, 252, 0.35);
-  padding-bottom: 1px;
-  transition: border-color 0.18s ease, color 0.18s ease;
+.shots figcaption {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 0.88rem;
+  color: var(--text-faint);
+  max-width: 64ch;
 }
-.link:hover {
-  color: #bde9ff;
-  border-bottom-color: currentColor;
+
+.shot-lead {
+  margin: 0 0 26px;
 }
+.shot-lead img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.shot-lead figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--text-faint);
+}
+
+.project .shot-grid-3 { margin-top: 26px; }
+
+/* These three come from different aspect ratios, so left alone their bottom
+   edges and captions sit at different heights. The 2-up grid above does not
+   need this: its rows are already near-identical shapes. */
+.shot-grid-3 .shot img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+@media (min-width: 760px) {
+  .shot-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .shot-grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
 
 /* ---------- about ---------- */
 
@@ -527,8 +526,6 @@ a { color: inherit; }
 }
 
 @media (max-width: 480px) {
-  .project { grid-template-columns: 1fr; gap: 0; }
-  .project-index { margin-bottom: 10px; }
   .foot-inner { gap: 10px; }
 }
 
