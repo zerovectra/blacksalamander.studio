@@ -1,0 +1,6 @@
+# Keep everything Cloudflare Pages parses in LF, regardless of local autocrlf.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary
+*.ico binary

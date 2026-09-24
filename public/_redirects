@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects. One rule per line: <from> <to> <status>
+# Send www to the apex domain. Requires www.blacksalamander.studio to be attached
+# to this Pages project as a custom domain, otherwise it never reaches here.
+https://www.blacksalamander.studio/* https://blacksalamander.studio/:splat 301
