@@ -63,6 +63,35 @@ Live at <https://blacksalamander.studio> via Cloudflare Pages, project
 `main` redeploys. `www` is attached as its own custom domain, so it serves the
 site directly rather than following the `_redirects` rule.
 
+## Typography
+
+Headings are set in **Newsreader**, self-hosted and subset:
+
+```powershell
+py tools/make_fonts.py
+```
+
+That writes one variable `.woff2` to `public/assets/fonts/` covering the whole
+200 to 800 weight range, about 28KB, plus the SIL OFL licence it ships under.
+Self-hosted rather than loaded from Google Fonts, because the CSP sets
+`font-src 'self'` and the site makes no external requests, which also means no
+third party sees who visits.
+
+Two things learned the hard way, worth not undoing:
+
+- The `@font-face` must say `format("woff2")`. The older `format("woff2-variations")`
+  is deprecated and Chrome silently ignores the whole rule, so the page falls
+  back to the system serif and nothing tells you why.
+- `.hero h1` uses `text-wrap: balance` rather than a fixed `max-width` in `ch`.
+  A serif sets narrower than the old sans, so any hand-tuned measure lands the
+  line break in the wrong place the moment the typeface changes.
+
+There is deliberately **no monospace face**. The site has no code and no data on
+it, and mono on small labels only ever signalled "technical product". For the
+same reason there are no tracked-out all-caps eyebrow labels and no meta strings
+joined with middle dots: both are common tells of a generated page, and both
+were here until they were removed.
+
 ## Screenshots
 
 Raw screenshots live in `tools/source/screenshots/` and are committed. The web

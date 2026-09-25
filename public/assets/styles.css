@@ -1,6 +1,18 @@
 /* Black Salamander Studios
    Dark / cold / arcane. One stylesheet, no build step, no external requests. */
 
+/* Newsreader, SIL OFL 1.1, self-hosted and subset by tools/make_fonts.py.
+   One variable file covers every weight we use. It is a serif with a
+   calligraphic hand, chosen to answer the brush-drawn salamander in the mark;
+   nothing else on the page should compete with it. */
+@font-face {
+  font-family: "Newsreader";
+  src: url("/assets/fonts/newsreader-var.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg:          #0a0e17;
   --bg-alt:      #0c121d;
@@ -19,10 +31,12 @@
   --live:        #5eead4;
   --early:       #94a3b8;
 
-  --font-sans: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system,
+  /* Display carries the personality, body stays quiet and gets out of the way.
+     There is no monospace: this site has no code and no data on it, and a mono
+     face on small labels only ever signalled "technical product". */
+  --font-display: "Newsreader", "Iowan Old Style", Palatino, Georgia, serif;
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system,
                "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "JetBrains Mono", "Cascadia Mono", ui-monospace, "SFMono-Regular",
-               Consolas, "Liberation Mono", monospace;
 
   --wrap: 1080px;
   --gutter: 20px;
@@ -51,9 +65,11 @@ body {
 
 h1, h2, h3 {
   margin: 0;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.12;
+  /* a serif this size needs no negative tracking; it is already tightly fitted */
+  letter-spacing: 0;
 }
 
 p { margin: 0 0 1em; }
@@ -131,14 +147,15 @@ a { color: inherit; }
   line-height: 1.1;
 }
 .brand-name {
-  font-weight: 600;
-  font-size: 0.98rem;
-  letter-spacing: 0.02em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
 }
 .brand-sub {
-  font-size: 0.66rem;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-style: italic;
   color: var(--text-faint);
 }
 
@@ -196,31 +213,15 @@ a { color: inherit; }
    and the section headings below. The text itself is constrained per element. */
 .hero-inner { position: relative; }
 
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 20px;
-}
-.eyebrow::before {
-  content: "";
-  display: inline-block;
-  width: 26px;
-  height: 1px;
-  background: var(--accent);
-  vertical-align: middle;
-  margin-right: 12px;
-  opacity: 0.7;
-}
-
 /* The measure is set so the headline breaks on its comma rather than stranding
    the last word on a line of its own. */
 .hero h1 {
-  font-size: clamp(2.1rem, 6.2vw, 3.7rem);
-  max-width: 18ch;
-  margin-bottom: 24px;
+  font-size: clamp(2.2rem, 6.4vw, 3.9rem);
+  /* The serif sets narrower than the old sans, so a fixed measure no longer
+     lands the break on the comma. Let the browser even the lines instead. */
+  max-width: 24ch;
+  text-wrap: balance;
+  margin-bottom: 26px;
 }
 
 .lede {
@@ -303,13 +304,11 @@ a { color: inherit; }
   margin-bottom: 10px;
 }
 
-/* the old status pills and tag chips read as a pricing page, so this is one
-   quiet line of plain text instead */
+/* One plain line, sentence case, no dots strung together and no small caps. */
 .project-note {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.97rem;
   color: var(--text-faint);
   margin-bottom: 18px;
 }
@@ -429,15 +428,6 @@ a { color: inherit; }
   border-color: var(--line-strong);
   background: var(--surface-2);
 }
-.contact-label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 10px;
-}
 .contact-list .link {
   font-size: 1.06rem;
 }
@@ -463,9 +453,8 @@ a { color: inherit; }
 }
 .foot-brand {
   margin: 0;
-  font-size: 0.86rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 1rem;
   color: var(--text-dim);
 }
 .foot-legal {
