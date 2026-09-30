@@ -152,11 +152,18 @@ a { color: inherit; }
   font-size: 1.08rem;
   letter-spacing: 0.01em;
 }
+/* Tracked-out all-caps, as the lockup was originally. This is a wordmark, not
+   a label above content, so the treatment earns its place here in a way it did
+   not above every heading. Set in the body sans rather than the monospace it
+   first used, since there is no longer a mono face on the site. */
 .brand-sub {
-  font-family: var(--font-display);
-  font-size: 0.78rem;
-  font-style: italic;
+  font-size: 0.66rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
   color: var(--text-faint);
+  /* the tracking adds a trailing gap; pull it back so the sub sits flush
+     under the B of the name above it */
+  margin-right: -0.34em;
 }
 
 .nav {
